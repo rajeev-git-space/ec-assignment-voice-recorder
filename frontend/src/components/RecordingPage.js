@@ -20,7 +20,6 @@ const RecordingPage = () => {
   } = useRecorder();
 
   const [savedRecordings, setSavedRecordings] = useState([]);
-  // const itemsPerPage = 10;
 
   useEffect(() => {
     fetchRecordings();
@@ -112,7 +111,19 @@ const RecordingPage = () => {
                       className="action-icon download"
                     />
                     <FaTrashAlt
-                      onClick={() => removeFile(recording.recording_name)}
+                      onClick={async () => {
+                        try {
+                          await removeFile(recording.recording_name);
+                          await fetchRecordings(); // Refresh the recordings list
+                          toast.success("Recording Deleted Successfully!", { autoClose: 2000 });
+                        } catch (error) {
+                          toast.error(error.message, {
+                            position: "top-right",
+                            autoClose: 2000,
+                          });
+                        }
+                      }
+                      }
                       title="Delete"
                       className="action-icon delete"
                     />

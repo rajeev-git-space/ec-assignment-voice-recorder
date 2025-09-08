@@ -31,31 +31,6 @@ const downloadFfmpegFromS3 = async () => {
     });
 };
 
-// const mergeAudioWithFfmpeg = async (chunks, outputFile) => {
-//     // Download ffmpeg binary from S3 to /tmp directory
-//     const ffmpegPath = await downloadFfmpegFromS3();
-
-//     // Save each chunk to a temporary file
-//     const inputFiles = chunks.map((chunk, index) => {
-//         const tempFilePath = path.join('/tmp', `chunk${index}.webm`);
-//         fs.writeFileSync(tempFilePath, chunk);
-//         return tempFilePath;
-//     });
-
-//     return new Promise((resolve, reject) => {
-//         // Construct the ffmpeg command to merge audio chunks
-//         const args = ['-i', 'concat:' + inputFiles.join('|'), '-c', 'copy', outputFile];
-
-//         // Execute ffmpeg command
-//         execFile(ffmpegPath, args, (error, stdout, stderr) => {
-//             if (error) {
-//                 reject(`ffmpeg error: ${stderr}`);
-//             } else {
-//                 resolve(outputFile);
-//             }
-//         });
-//     });
-// };
 const createFileList = async (chunks) => {
     const fileListPath = '/tmp/filelist.txt';
     const fileContent = chunks
